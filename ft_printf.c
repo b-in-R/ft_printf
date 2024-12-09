@@ -11,9 +11,6 @@
 /* ************************************************************************** */
 
 #include "libftprintf.h"
-#include <stdio.h>//
-#include <unistd.h>
-#include <stdarg.h>
 
 int	ft_printf(const char *format, ...)
 {
@@ -27,7 +24,27 @@ int	ft_printf(const char *format, ...)
 		if (*format == '%')
 		{
 			format++;
-			if(*format == 'd')
+			if(*format == 'c')
+			{
+
+			}
+			else if(*format == 's')
+			{
+
+			}
+			else if(*format == 'p')
+			{
+
+			}
+			else if(*format == 'd' || *format == 'i' || *format == 'u')
+			{
+
+			}
+			else if(*format == 'x' || *format == 'X')
+			{
+
+			}
+			else if(*format == %)
 			{
 
 			}
@@ -43,13 +60,12 @@ int	ft_printf(const char *format, ...)
 	return (nb);
 }
 
+#include <stdio.h>
 int	main(void)
 {
-	char	c = 'a';
-	char	str[] = "str";
 	int		i = 45;
-	
-
+	int		j = 0;
+	int		*ptr = &i;
 /*
 	%c -> char
 	%s -> string
@@ -61,5 +77,10 @@ int	main(void)
 	%X -> nbr en hexa (base 16) uppercase
 	%% -> pourcent sign
 */
-
+	j = (printf("-----\nVRAI\n-----\nc: %c\ns: %s\np: %p\nd: %d\ni: %i\nu: %u\nx: %x\nX: %X\npct: %%\n", 'a', "test", ptr, 2147483647, -2147483647, 429496729, i, i));
+	printf("nbr caract: %i\n", j);
+	j = (ft_printf("-----\nTEST\n-----\nc: %c\ns: %s\np: %p\nd: %d\ni: %i\nu: %u\nx: %x\nX: %X\npct: %%\n", 'a', "test", ptr, 2147483647, -2147483647, 429496729, i, i));
+	ft_printf("nbr caract: %i\n", j);
+	
+	return 0;
 }

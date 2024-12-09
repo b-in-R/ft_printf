@@ -1,26 +1,13 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libftprintf.h                                      :+:      :+:    :+:   */
+/*   ft_printf_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rabiner <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/08 16:43:22 by rabiner           #+#    #+#             */
-/*   Updated: 2024/12/08 16:43:24 by rabiner          ###   ########.fr       */
+/*   Created: 2024/12/09 12:10:41 by rabiner           #+#    #+#             */
+/*   Updated: 2024/12/09 12:10:43 by rabiner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFTPRINTF_H
-# define LIBFTPRINTF_H
 
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdarg.h>
-
-/*
-struct si besoin
-*/
-
-int	ft_printf(const char *format, ...);
-
-#endif
