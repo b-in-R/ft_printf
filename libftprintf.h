@@ -16,10 +16,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdarg.h>
-
-/*
-struct si besoin
-*/
+# include <stdio.h>////
 
 int	ft_printf(const char *format, ...);
 
