@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libftprintf.h                                      :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rabiner <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,13 +10,18 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFTPRINTF_H
-# define LIBFTPRINTF_H
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdarg.h>
+
 # include <stdio.h>////
+# include <limits.h>///
+
+# define SYMB_MIN "0123456789abcdef"
+# define SYMB_MAX "0123456789ABCDEF"
 
 int	ft_printf(const char *format, ...);
 
