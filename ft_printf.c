@@ -12,25 +12,6 @@
 
 #include "ft_printf.h"
 
-int	ft_putchar(char c)
-{
-	return (write(1, &c, 1));
-}
-
-int	ft_putstr(char *str)
-{
-	int	nb;
-
-	nb = 0;
-	while (*str)
-	{
-		ft_putchar((int)*str);
-		nb++;
-		str++;
-	}
-	return (nb);
-}
-
 int	ft_puthex(unsigned long nbr, char format)
 {
 	int	nb;
@@ -58,7 +39,7 @@ int	ft_putnbr(long nbr, char format)
 		nbr = (unsigned long)nbr;
 	if (nbr == -2147483648 && (format == 'i' || format == 'd'))
 		return (nb = write(1, "-2147483648", 11));
-	if (nbr < 0 && (format == 'i' || format == 'd'))
+	else if (nbr < 0 && (format == 'i' || format == 'd'))
 	{
 		nb = write(1, "-", 1);
 		return (ft_putnbr(-nbr, format) + 1);
@@ -134,25 +115,3 @@ int	ft_printf(const char *format, ...)
 	va_end(ap);
 	return (nb);
 }
-/*
-int	main(void)
-{
-	int		i = 8;
-	int		j = 0;
-	int		k = 0;
-	int		*po = 0;
-	char	p[]= "salut";
-
-	j = (ft_printf("TEST\n----\n%p\non ecrit un truc\n%p\n%i\n%s\n%u\n%u\n",
-		po, p, i, p, i, -i));
-	ft_printf("test caract: %i\n", j);
-	printf("vrai caract: %i\n-----------------\n\n", j);
-
-	k = (printf("VRAI\n----\n%p\non ecrit un truc\n%p\n%i\n%s\n%u\n%u\n",
-		po, p, i, p, i, -i));
-	ft_printf("test caract: %i\n", k);
-	printf("vrai caract: %i\n-----------------\n", k);
-
-	return 0;
-}
-*/

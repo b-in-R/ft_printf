@@ -17,12 +17,18 @@
 # include <stdlib.h>
 # include <stdarg.h>
 
-# include <stdio.h>////
-# include <limits.h>///
-
 # define SYMB_MIN "0123456789abcdef"
 # define SYMB_MAX "0123456789ABCDEF"
 
 int	ft_printf(const char *format, ...);
+int	check_format(char format, va_list ap);
+int	check_ptr(char format, va_list ap);
+int	ft_putnbr(long nbr, char format);
+int	ft_puthex(unsigned long nbr, char format);
+
+int	ft_putchar(char c);
+int	ft_putstr(char *str);
+
+int	main(void);
 
 #endif
