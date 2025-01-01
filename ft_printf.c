@@ -31,7 +31,7 @@ int	ft_putstr(char *str)
 	return (nb);
 }
 
-int	ft_puthex(unsigned int nbr, char format)
+int	ft_puthex(unsigned long nbr, char format)
 {
 	int	nb;
 
@@ -39,7 +39,7 @@ int	ft_puthex(unsigned int nbr, char format)
 		return (write(1, "0", 1));
 	else if (nbr >= 16)
 	{
-		ft_puthex(nbr / 16, format);
+		nb = ft_puthex(nbr / 16, format);
 		return (nb + ft_puthex(nbr % 16, format));
 	}
 	else if (nbr <= 9)
@@ -50,16 +50,14 @@ int	ft_puthex(unsigned int nbr, char format)
 		return (ft_putchar(SYMB_MIN[nbr]));
 }
 
-int	ft_putnbr(int nbr, char format)
+int	ft_putnbr(long nbr, char format)
 {
 	int		nb;
-	
-	if (format == 'u')
-		nbr = (unsigned int)nbr;
+
+	if (format == 'u' && nbr < 0)
+		nbr = (unsigned long)nbr;
 	if (nbr == -2147483648 && (format == 'i' || format == 'd'))
-	{
 		return (nb = write(1, "-2147483648", 11));
-	}
 	if (nbr < 0 && (format == 'i' || format == 'd'))
 	{
 		nb = write(1, "-", 1);
@@ -74,9 +72,26 @@ int	ft_putnbr(int nbr, char format)
 		return (ft_putchar(nbr + 48));
 }
 
+int	check_ptr(char format, va_list ap)
+{
+	void	*ptr;
+	int		nb;
+
+	nb = 0;
+	ptr = va_arg(ap, void *);
+	if (ptr == NULL)
+		nb += write(1, "(nil)", 5);
+	else
+	{
+		nb += write(1, "0x", 2);
+		nb += ft_puthex((unsigned long)ptr, format);
+	}
+	return (nb);
+}
+
 int	check_format(char format, va_list ap)
 {
-	int	nb;
+	int		nb;
 
 	nb = 0;
 	if (format == 'c')
@@ -84,14 +99,11 @@ int	check_format(char format, va_list ap)
 	else if (format == 's')
 		nb += ft_putstr(va_arg(ap, char *));
 	else if (format == 'p')
-	{
-		nb += write(1, "0x", 2);
-		nb += ft_puthex(va_arg(ap, unsigned int), format);
-	}
+		nb += check_ptr(format, ap);
 	else if (format == 'd' || format == 'i')
 		nb += ft_putnbr(va_arg(ap, int), format);
 	else if (format == 'u')
-		nb += ft_putnbr(va_arg(ap, unsigned int), format);
+		nb += ft_putnbr(va_arg(ap, unsigned long), format);
 	else if (format == 'x' || format == 'X')
 		nb += ft_puthex(va_arg(ap, unsigned int), format);
 	else
@@ -108,7 +120,7 @@ int	ft_printf(const char *format, ...)
 	nb = 0;
 	while (*format)
 	{
-		if (*format == '%' && *format + 1 == '%')
+		if (*format == '%' && *(format + 1) == '%')
 		{
 			nb += ft_putchar('%');
 			format++;
@@ -122,50 +134,25 @@ int	ft_printf(const char *format, ...)
 	va_end(ap);
 	return (nb);
 }
-
+/*
 int	main(void)
 {
-	int		i = 45;
+	int		i = 8;
 	int		j = 0;
 	int		k = 0;
+	int		*po = 0;
 	char	p[]= "salut";
 
-	j = (ft_printf("TEST\n----\n%p\n", p));
+	j = (ft_printf("TEST\n----\n%p\non ecrit un truc\n%p\n%i\n%s\n%u\n%u\n",
+		po, p, i, p, i, -i));
 	ft_printf("test caract: %i\n", j);
 	printf("vrai caract: %i\n-----------------\n\n", j);
 
-	k = (printf("VRAI\n----\n%p\n", p));
+	k = (printf("VRAI\n----\n%p\non ecrit un truc\n%p\n%i\n%s\n%u\n%u\n",
+		po, p, i, p, i, -i));
 	ft_printf("test caract: %i\n", k);
 	printf("vrai caract: %i\n-----------------\n", k);
-/*
-	%c -> char								ok
-	%s -> string							ok
-	%p -> void * pointer en hexadecimal		!  marche pas
-	%d -> decimal (base 10)					ok
-	%i -> integer (base 10)					ok
-	%u -> unsigned decimal nbr (base 10)	!  chiffres neg
-	%x -> nbr en hexa (base 16) lowercase	ok
-	%X -> nbr en hexa (base 16) uppercase	ok
-	%% -> pourcent sign						ok
-*/
-/*
- *	1: trouver le nbre d'apuments grace au %, attention s'il y a %%
- *	2: promotions: si le type n'est pas specifie comme la avec les ..., les char deviennent automatiquement des int
- */
-/*
-	j = (printf("-----\nVRAI\n-----\nc: %c\ns: %s\np: %p\nd: %d\ni: %i\nu: %u\nx: %x\nX: %X\npct: %%\n", 'a', "test", ptr, 2147483647, -2147483647, 429496729, i, i));
 
-	printf("nbr caract: %i\n", j);
-
-	k = (ft_printf("-----\nTEST\n-----\nc: %c\ns: %s\np: %p\nd: %d\ni: %i\nu: %u\nx: %x\nX: %X\npct: %%\n", 'a', "test", ptr, 2147483647, -2147483647, 429496729, i, i));
-
-	ft_printf("nbr caract: %i\n", k);
-	printf("(v)nbr caract: %i\n", k);
-*/
-//	j = (printf("-----\nVRAI\n-----\np: %p\nx: %x\nX: %X\n", ptr, i, i));
-
-//	printf("nbr caract: %i\n", j);
-
-//	k = (ft_printf("-----\nTEST\n-----\np: %p\nx: %x\nX: %X\n", ptr, i, i));
 	return 0;
 }
+*/
