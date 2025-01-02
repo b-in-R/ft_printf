@@ -12,47 +12,6 @@
 
 #include "ft_printf.h"
 
-int	ft_puthex(unsigned long nbr, char format)
-{
-	int	nb;
-
-	if (nbr == 0)
-		return (write(1, "0", 1));
-	else if (nbr >= 16)
-	{
-		nb = ft_puthex(nbr / 16, format);
-		return (nb + ft_puthex(nbr % 16, format));
-	}
-	else if (nbr <= 9)
-		return (ft_putchar(nbr + 48));
-	else if (format == 'X')
-		return (ft_putchar(SYMB_MAX[nbr]));
-	else
-		return (ft_putchar(SYMB_MIN[nbr]));
-}
-
-int	ft_putnbr(long nbr, char format)
-{
-	int		nb;
-
-	if (format == 'u' && nbr < 0)
-		nbr = (unsigned long)nbr;
-	if (nbr == -2147483648 && (format == 'i' || format == 'd'))
-		return (nb = write(1, "-2147483648", 11));
-	else if (nbr < 0 && (format == 'i' || format == 'd'))
-	{
-		nb = write(1, "-", 1);
-		return (ft_putnbr(-nbr, format) + 1);
-	}
-	else if (nbr > 9)
-	{
-		nb = ft_putnbr(nbr / 10, format);
-		return (nb + ft_putnbr(nbr % 10, format));
-	}
-	else
-		return (ft_putchar(nbr + 48));
-}
-
 int	check_ptr(char format, va_list ap)
 {
 	void	*ptr;
@@ -70,9 +29,23 @@ int	check_ptr(char format, va_list ap)
 	return (nb);
 }
 
+int	check_uint(char format, va_list ap)
+{
+	unsigned int	nbmax;
+	int				nb;
+
+	nb = 0;
+	nbmax = va_arg(ap, unsigned long);
+	if (nbmax >= 4294967295)
+		nb += ft_putstr("4294967295");
+	else
+		nb += ft_putnbr(nbmax, format);
+	return (nb);
+}
+
 int	check_format(char format, va_list ap)
 {
-	int		nb;
+	int				nb;
 
 	nb = 0;
 	if (format == 'c')
@@ -84,7 +57,7 @@ int	check_format(char format, va_list ap)
 	else if (format == 'd' || format == 'i')
 		nb += ft_putnbr(va_arg(ap, int), format);
 	else if (format == 'u')
-		nb += ft_putnbr(va_arg(ap, unsigned long), format);
+		nb += check_uint(format, ap);
 	else if (format == 'x' || format == 'X')
 		nb += ft_puthex(va_arg(ap, unsigned int), format);
 	else

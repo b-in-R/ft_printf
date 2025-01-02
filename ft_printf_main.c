@@ -27,3 +27,29 @@ int	main(void)
 	ft_printf("nbr caract: %i\n", j);
 	return (0);
 }
+/*
+#include <limits.h>
+#include <stdio.h>
+
+int	main(void)
+{
+	int		i = 8;
+	int		j = 0;
+	int		k = 0;
+	int		*p = &i;
+//	char	str[] = NULL;
+
+	j = (ft_printf("TEST\n-----\n24.long max: %u\n27.ulong max: %u\
+			\n28.92..07LL: %u\n", LONG_MAX, ULONG_MAX, 9223372036854775807LL));
+	ft_printf("ft_nbr caract: %i\n", j);
+	printf("vr_nbr caract: %i\n-----------\n", j);
+	k = (printf("VRAI\n-----\n24.long max: %lu\n27.ulong max: %lu\
+		\n28.92..07LL: %llu\n", LONG_MAX, ULONG_MAX, 9223372036854775807LL));
+	ft_printf("ft_nbr caract: %i\n", k);
+	printf("vr_nbr caract: %i\n----------\n", k);
+
+	k++;
+	p++;
+	return (0);
+}
+*/
