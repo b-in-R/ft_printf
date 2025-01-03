@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
+/*
 int	main(void)
 {
 	int		i;
@@ -27,7 +27,7 @@ int	main(void)
 	ft_printf("nbr caract: %i\n", j);
 	return (0);
 }
-/*
+*/
 #include <limits.h>
 #include <stdio.h>
 
@@ -52,4 +52,4 @@ int	main(void)
 	p++;
 	return (0);
 }
-*/
+
