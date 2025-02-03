@@ -20,7 +20,7 @@ int	check_ptr(char format, va_list ap)
 	nb = 0;
 	ptr = va_arg(ap, void *);
 	if (ptr == NULL)
-		nb += write(1, "(nil)", 5);
+		nb += write(1, NULL_PTR_STR, NULL_PTR_LEN);
 	else
 	{
 		nb += write(1, "0x", 2);

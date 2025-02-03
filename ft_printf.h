@@ -13,6 +13,14 @@
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
+# ifdef __MAC__
+#  define NULL_PTR_STR "0x0"
+#  define NULL_PTR_LEN 3
+# else
+#  define NULL_PTR_STR ("(nil)")
+#  define NULL_PTR_LEN 5
+# endif
+
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdarg.h>
