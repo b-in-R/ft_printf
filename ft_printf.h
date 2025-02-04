@@ -13,7 +13,7 @@
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
-# ifdef __MAC__
+# ifdef __APPLE__
 #  define NULL_PTR_STR "0x0"
 #  define NULL_PTR_LEN 3
 # else
